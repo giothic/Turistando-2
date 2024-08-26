@@ -6,11 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import turistando.turistandospring.Enum.TipoGasto;
 import turistando.turistandospring.Exception.Excecao;
 import turistando.turistandospring.model.GastoModel;
+
 import turistando.turistandospring.service.GastoService;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/gasto")
@@ -61,15 +64,17 @@ public class GastoController {
         }
     }
 
-    @GetMapping("/categoria/{categoria}")
-    public ResponseEntity<List<GastoModel>> relatorioPorCategoria(@PathVariable String categoria) {
-        List<GastoModel> gastos = gastoService.relatorioPorCategoria(categoria);
+    @GetMapping("/categoria/{placa}/{categoria}")
+    public ResponseEntity<List<GastoModel>> relatorioPorCategoria(
+            @PathVariable String placa, 
+            @PathVariable TipoGasto categoria) {
+        List<GastoModel> gastos = gastoService.getGastosPorCategoriaEPlaca(placa, categoria);
         return new ResponseEntity<>(gastos, HttpStatus.OK);
     }
 
-    @GetMapping("/geral")
-    public ResponseEntity<List<GastoModel>> relatorioGeral() {
-        List<GastoModel> gastos = gastoService.relatorioGeral();
+    @GetMapping("/geral/{placa}")
+    public ResponseEntity<List<GastoModel>> relatorioGeral(@PathVariable String placa) {
+        List<GastoModel> gastos = gastoService.getGastosPorPlaca(placa);
         return new ResponseEntity<>(gastos, HttpStatus.OK);
     }
 }

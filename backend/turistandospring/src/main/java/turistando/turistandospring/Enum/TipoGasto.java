@@ -4,7 +4,7 @@ public enum TipoGasto {
     IMPOSTO,
     MULTA,
     MANUTENCAO,
-    OUTROS;
+    OUTRO;
  
     private TipoGasto() {
     }

@@ -1,36 +1,28 @@
 import { Component } from '@angular/core';
-import { VeiculoService, Veiculo } from '../veiculo.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cadastro-veiculo',
+  standalone: true,
   templateUrl: './cadastro-veiculo.component.html',
-  styleUrls: ['./cadastro-veiculo.component.css']
+  styleUrls: ['./cadastro-veiculo.component.css'],
+  imports: [FormsModule]  // Adicione o FormsModule aqui
 })
 export class CadastroVeiculoComponent {
-  veiculo: Veiculo = {
+  veiculo = {
     placa: '',
     marca: '',
     modelo: '',
-    anoModelo: 0,
-    anoFabricacao: 0,
+    anoModelo: null,
+    anoFabricacao: null,
     cor: '',
-    renavam: 0,
-    motorizacao: 0,
-    capacidadeTanque: 0
+    renavam: null,
+    motorizacao: null,
+    capacidadeTanque: null
   };
 
-  constructor(private veiculoService: VeiculoService) { }
-
-  onSubmit(): void {
-    this.veiculoService.cadastrarVeiculo(this.veiculo).subscribe({
-      next: (result) => {
-        console.log('Veículo cadastrado com sucesso!', result);
-        // Adicione uma mensagem de sucesso ou redirecione o usuário
-      },
-      error: (err) => {
-        console.error('Erro ao cadastrar veículo:', err);
-        // Adicione uma mensagem de erro ou tratamento
-      }
-    });
+  onSubmit() {
+    // Lógica para manipular o envio do formulário
+    console.log('Veículo cadastrado:', this.veiculo);
   }
 }

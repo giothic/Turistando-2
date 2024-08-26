@@ -3,11 +3,15 @@ package turistando.turistandospring.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import turistando.turistandospring.Enum.TipoGasto;
 import turistando.turistandospring.Exception.Excecao;
 import turistando.turistandospring.model.GastoModel;
+
 import turistando.turistandospring.repository.GastoRepository;
 
+
 import java.util.List;
+
 
 @Service
 public class GastoService {
@@ -49,11 +53,11 @@ public class GastoService {
         return false;
     }
 
-    public List<GastoModel> relatorioPorCategoria(String categoria) {
-        return gastoRepository.findByCategoria(categoria);
+    public List<GastoModel> getGastosPorPlaca(String placa) {
+        return gastoRepository.findByPlaca(placa);
     }
-    
-    public List<GastoModel> relatorioGeral() {
-        return gastoRepository.findAll();
+
+    public List<GastoModel> getGastosPorCategoriaEPlaca(String placa, TipoGasto categoria) {
+        return gastoRepository.findByCategoriaAndPlaca(categoria, placa);
     }
 }

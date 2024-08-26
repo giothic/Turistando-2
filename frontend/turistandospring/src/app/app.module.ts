@@ -1,24 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { AppRoutingModule } from './app-routing.module'; // Verifique se está correto
-import { AppComponent } from './app.component';
-import { RouterModule } from '@angular/router'; // Adicione esta importação se necessário
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    FormsModule, 
-    AppRoutingModule
-    // Declare seus componentes aqui
+
+    // Declare outros componentes que não sejam standalone aqui
   ],
   imports: [
     BrowserModule,
-    FormsModule, // Necessário para [(ngModel)]
-    AppRoutingModule, // Certifique-se de que está importado
-    RouterModule // Adicione esta importação se necessário
+    FormsModule,
+    RouterModule,
+    HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  // Não declare o AppComponent aqui
 })
 export class AppModule { }

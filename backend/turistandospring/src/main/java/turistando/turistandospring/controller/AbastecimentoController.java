@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
 import turistando.turistandospring.Exception.Excecao;
 import turistando.turistandospring.model.AbastecimentoModel;
 import turistando.turistandospring.service.AbastecimentoService;
@@ -20,7 +19,7 @@ public class AbastecimentoController {
     private AbastecimentoService abastecimentoService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<AbastecimentoModel> cadastrarAbastecimento(@RequestBody AbastecimentoModel abastecimento) {
+    public ResponseEntity<AbastecimentoModel> cadastrarAbastecimento(@RequestBody AbastecimentoModel abastecimento) throws Exception {
         AbastecimentoModel savedAbastecimento = abastecimentoService.createAbastecimento(abastecimento);
         return new ResponseEntity<>(savedAbastecimento, HttpStatus.CREATED);
     }
@@ -60,5 +59,15 @@ public class AbastecimentoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-}
 
+    // Novo endpoint para calcular o consumo médio
+    @GetMapping("/consumo-medio/{placa}")
+    public ResponseEntity<Double> calcularConsumoMedio(@PathVariable String placa) {
+        try {
+            double consumoMedio = abastecimentoService.calcularConsumoMedioPorLitro(placa);
+            return new ResponseEntity<>(consumoMedio, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
+    }
+}

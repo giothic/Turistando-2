@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-// import { environment } from '../environments/environment';
+import { environment } from './environments/environment';
+
 
 export interface Veiculo {
   placa: string;
@@ -15,15 +16,15 @@ export interface Veiculo {
   capacidadeTanque: number;
 }
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// // export class VeiculoService {
-// //   private apiUrl = `${environment.apiUrl}/veiculo/cadastrar`;
+@Injectable({
+  providedIn: 'root'
+})
+export class VeiculoService {
+  private apiUrl = `${environment.apiUrl}/veiculo/cadastrar`;
 
-// //   constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-// //   cadastrarVeiculo(veiculo: Veiculo): Observable<Veiculo> {
-// //     return this.http.post<Veiculo>(this.apiUrl, veiculo);
-// //   }
-// }
+  cadastrarVeiculo(veiculo: Veiculo): Observable<Veiculo> {
+    return this.http.post<Veiculo>(this.apiUrl, veiculo);
+  }
+}

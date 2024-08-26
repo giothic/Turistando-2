@@ -1,7 +1,7 @@
 package turistando.turistandospring.model;
 
 import jakarta.persistence.*;
-import turistando.turistandospring.Enum.CombustivelEnum;
+import turistando.turistandospring.Enum.TipoAbastecimento;
 
 
 @Entity
@@ -16,11 +16,21 @@ public class AbastecimentoModel {
     private double quantidade;
 
     @Enumerated(EnumType.STRING)
-    private CombustivelEnum combustivelEnum;
+    public TipoAbastecimento tipoAbastecimento;
 
     @ManyToOne
     @JoinColumn(name = "veiculo_id")
     private VeiculoModel veiculo;
+    
+    public TipoAbastecimento getTipoAbastecimento() {
+        return tipoAbastecimento;
+    }
+
+    public void setTipoAbastecimento(TipoAbastecimento tipoAbastecimento) {
+        this.tipoAbastecimento = tipoAbastecimento;
+    }
+
+
 
     // Getters e Setters
 
@@ -54,14 +64,6 @@ public class AbastecimentoModel {
 
     public void setQuantidade(double quantidade) {
         this.quantidade = quantidade;
-    }
-
-    public CombustivelEnum getCombustivelEnum() {
-        return combustivelEnum;
-    }
-
-    public void setCombustivelEnum(CombustivelEnum combustivelEnum) {
-        this.combustivelEnum = combustivelEnum;
     }
 
     public VeiculoModel getVeiculo() {

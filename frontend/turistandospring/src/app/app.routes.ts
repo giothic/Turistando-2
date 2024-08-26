@@ -1,8 +1,10 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
 import { CadastroVeiculoComponent } from './cadastro-veiculo/cadastro-veiculo.component';
+import { RegistrarAbastecimentoComponent } from './registrar-abastecimento/registrar-abastecimento.component';
+import { RegistrarDespesaComponent } from './registrar-despesa/registrar-despesa.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'cadastrar-veiculo', component: CadastroVeiculoComponent }
+  { path: 'cadastrar-veiculo', component: CadastroVeiculoComponent },
+  { path: 'registrar-abastecimento', component: RegistrarAbastecimentoComponent },
+  { path: 'registrar-despesa', component: RegistrarDespesaComponent}
 ];

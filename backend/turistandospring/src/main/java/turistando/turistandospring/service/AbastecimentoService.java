@@ -1,12 +1,14 @@
 package turistando.turistandospring.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import turistando.turistandospring.Enum.CombustivelEnum;
+import turistando.turistandospring.Enum.TipoAbastecimento;
 import turistando.turistandospring.Exception.Excecao;
 import turistando.turistandospring.model.AbastecimentoModel;
+import turistando.turistandospring.model.VeiculoModel;
 import turistando.turistandospring.repository.AbastecimentoRepository;
+import turistando.turistandospring.repository.VeiculoRepository;
 
 import java.util.List;
 
@@ -16,8 +18,22 @@ public class AbastecimentoService {
     @Autowired
     private AbastecimentoRepository abastecimentoRepository;
 
+    @Autowired
+    private VeiculoRepository veiculoRepository;
+
     // Criar um novo abastecimento
-    public AbastecimentoModel createAbastecimento(AbastecimentoModel abastecimentoModel) {
+    public AbastecimentoModel createAbastecimento(AbastecimentoModel abastecimentoModel) throws Exception {
+        VeiculoModel veiculo = veiculoRepository.findById(abastecimentoModel.getVeiculo().getPlaca())
+                .orElseThrow(() -> new Excecao("Veículo não encontrado com a placa: " + abastecimentoModel.getVeiculo().getPlaca()));
+
+        // Verifica se o veículo é Flex
+        if (veiculo.getCombustivel() == CombustivelEnum.Flex) {
+            if (!abastecimentoModel.getTipoAbastecimento().equals(TipoAbastecimento.GASOLINA) &&
+                !abastecimentoModel.getTipoAbastecimento().equals(TipoAbastecimento.ALCOOL)) {
+                throw new Exception ("Veículo Flex pode ser abastecido apenas com Gasolina ou Álcool.");
+            }
+        }
+
         return abastecimentoRepository.save(abastecimentoModel);
     }
 
@@ -50,8 +66,9 @@ public class AbastecimentoService {
         return false;
     }
 
-    public double calcularConsumoMedioPorLitro(String id) {
-        List<AbastecimentoModel> abastecimentos = abastecimentoRepository.findByVeiculoPlacaOrderByQuilometragemAsc(id);
+    // Calcular o consumo médio de combustível por litro
+    public double calcularConsumoMedioPorLitro(String placa) {
+        List<AbastecimentoModel> abastecimentos = abastecimentoRepository.findByVeiculoPlacaOrderByQuilometragemAsc(placa);
         
         if (abastecimentos.size() < 2) {
             throw new IllegalArgumentException("Não há abastecimentos suficientes para calcular o consumo médio.");
