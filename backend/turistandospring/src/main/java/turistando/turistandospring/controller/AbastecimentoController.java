@@ -70,4 +70,10 @@ public class AbastecimentoController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
     }
+
+    @GetMapping("/{placa}")
+    public ResponseEntity<List<AbastecimentoModel>> listarAbastecimentosPorPlaca(@PathVariable String placa) throws Excecao {
+        List<AbastecimentoModel> abastecimentos = abastecimentoService.getAbastecimentoByPlaca(placa);
+        return new ResponseEntity<>(abastecimentos, HttpStatus.OK);
+    }
 }

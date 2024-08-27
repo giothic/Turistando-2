@@ -91,4 +91,9 @@ public class AbastecimentoService {
         
         return totalQuilometros / totalLitros;
     }
+
+    // Obter abastecimentos por placa do veículo
+    public List<AbastecimentoModel> getAbastecimentoByPlaca(String placa) {
+        return abastecimentoRepository.findByPlaca(placa);
+    }
 }
